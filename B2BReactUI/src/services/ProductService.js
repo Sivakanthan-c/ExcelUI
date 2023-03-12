@@ -28,8 +28,15 @@ window.fetch = async (...args) => {
 };
 
 
+const getBaseUrl = () => {
+    if (window.location.hostname === 'localhost') {
+        return AppConstant.APILOCALENDPOINT;
+    }
+    return AppConstant.APIENDPOINT;
+}
+
 const getProducts = (page, pageSize) => {
-    const productUrl = `${AppConstant.APIENDPOINT}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${pageSize}&page=${page}`;
+    const productUrl = `${getBaseUrl()}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=${pageSize}&page=${page}`;
     const requestData = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json; charset=UTF-8' }
@@ -38,7 +45,7 @@ const getProducts = (page, pageSize) => {
 }
 
 const getPriceData = (priceId) => {
-    const priceUrl = `${AppConstant.APIENDPOINT}/o/headless-commerce-admin-catalog/v1.0/products/${priceId}/skus`;
+    const priceUrl = `${getBaseUrl()}/o/headless-commerce-admin-catalog/v1.0/products/${priceId}/skus`;
     const requestData = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json; charset=UTF-8' }
@@ -54,7 +61,7 @@ const uploadExcel = (file) => {
         file,
         file.name
     );
-    const url = `${AppConstant.APILOCALENDPOINT}/o/b2badmin/import`;
+    const url = `${getBaseUrl()}/o/b2badmin/import`;
     const requestData = {
         method: 'POST',
         body: formData,
@@ -63,6 +70,6 @@ const uploadExcel = (file) => {
     return fetch(url, requestData);
 }
 
-const ProductService = { getProducts, getPriceData, uploadExcel };
+const ProductService = { getProducts, getPriceData, uploadExcel, getBaseUrl };
 
 export default ProductService;
