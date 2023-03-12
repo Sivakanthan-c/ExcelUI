@@ -2,7 +2,6 @@ import React from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@material-ui/core";
 import ProductService from "../services/ProductService";
 import Spinner from "./spinner/Spinner";
-import * as AppConstant from '../constant/AppConstants';
 
 class ProductList extends React.Component {
 
@@ -108,7 +107,7 @@ class ProductList extends React.Component {
     }
 
     render() {
-        const apiBaseUrl = AppConstant.APIENDPOINT;
+        const apiBaseUrl = ProductService.getBaseUrl();
         const handleChangePage = (event, newPage) => {
             this.setState({
                 page: newPage
@@ -142,7 +141,7 @@ class ProductList extends React.Component {
                 <TableCell>{
                     <div className="d-flex">
                         <div className="d-flex align-items-center">
-                            <img src={apiBaseUrl + rowData.thumbnail} onError={(e) => e.target.src = '/logo192.png'}
+                            <img src={apiBaseUrl + rowData.thumbnail} 
                                 alt={rowData.thumbnail} className="product-image" />
                         </div>
                         <div className="item-content">
